@@ -13,7 +13,7 @@ class Blockchain(object):
         self.current_transactions = []
 
         #Create the genesis block
-        self.new_block(previous_hash=1, proof=100)
+        self.new_block(1,100)
 
     def proof_of_work(self, last_proof):
         '''
@@ -36,7 +36,7 @@ class Blockchain(object):
         return guess_hash[:4] == "0000"
 
 
-    def new_block(self):
+    def new_block(self,previous_hash,last_proof):
         # Function for adding a new block to the chain
 
         block = {
@@ -44,7 +44,7 @@ class Blockchain(object):
             'timestamp':time(),
             'transactions':self.current_transactions,
             # The proof from the proof work algorithm
-            'proof':proof,
+            'proof':self.proof_of_work(last_proof),
             # Hash of the previous block
             'previous_hash':previous_hash or self.hash(self.chain[-1]),
         }
